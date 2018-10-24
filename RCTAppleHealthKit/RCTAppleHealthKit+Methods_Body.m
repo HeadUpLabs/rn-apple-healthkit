@@ -230,7 +230,7 @@
 
     [self.healthStore saveObject:heightSample withCompletion:^(BOOL success, NSError *error) {
         if (!success) {
-            NSLog(@"error saving height sample: %@", error);
+            NSLog(@"error saving height sample LUL: %@", error);
             callback(@[RCTMakeError(@"error saving height sample", error, nil)]);
             return;
         }
