@@ -15,21 +15,20 @@
             return;
         }
         
-        HKQuantityType *restingHeartRateType = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierRestingHeartRate];
-        HKUnit *restingHeartRateUnit = [HKUnit countUnit];
+        HKSampleType *restingHeartRateType = [HKSampleType quantityTypeForIdentifier: HKQuantityTypeIdentifierRestingHeartRate];
+        HKUnit *restingHeartRateUnit = [HKUnit unitFromString: @"count/min"];
         
-        [self fetchSumOfSamplesOnDayForType:restingHeartRateType
+        [self fetchDiscreteValueOnDayForType:restingHeartRateType
                                        unit:restingHeartRateUnit
-                                        day:date
-                                       completion:^(double value, NSDate *startDate, NSDate *endDate, NSError *error) {
+                                       day:date
+                                       completion:^(double value, NSDate *day, NSError *error) {
             if (!value) {
                 NSLog(@"error getting resting heart rate: %@", error);
                 callback(@[RCTMakeError(@"error getting resting heart rate", error, nil)]);
             } else {                                               
                NSDictionary *response = @{
                                           @"value" : @(value),
-                                          @"startDate" : [RCTAppleHealthKit buildISO8601StringFromDate:startDate],
-                                          @"endDate" : [RCTAppleHealthKit buildISO8601StringFromDate:endDate],
+                                          @"day" : [RCTAppleHealthKit buildISO8601StringFromDate:day]
                                           };
                
                callback(@[[NSNull null], response]);

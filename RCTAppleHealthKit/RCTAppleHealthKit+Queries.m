@@ -288,24 +288,24 @@
     [self.healthStore executeQuery:query];
 }
 
-- (void)fetchDiscreteValueOnDayForType:(HKQuantityType *)quantityType
-                                 unit:(HKUnit *)unit
+- (void)fetchDiscreteValueOnDayForType:(HKSampleType *)sampleType
+                                  unit:(HKUnit *)unit
                                   day:(NSDate *)day
-                           completion:(void (^)(double, NSDate *, NSDate *, NSError *))completionHandler {
+                           completion:(void (^)(double, NSDate *, NSError *))completionHandler {
     
     NSPredicate *predicate = [RCTAppleHealthKit predicateForSamplesOnDay:day];
-    HKStatisticsQuery *query = [[HKStatisticsQuery alloc] initWithQuantityType:quantityType
-                                                       quantitySamplePredicate:predicate
-                                                                       options:HKStatisticsOptionDiscreteAverage
-                                                             completionHandler:^(HKStatisticsQuery *query, HKStatistics *result, NSError *error) {
-                                                                 HKQuantity *sum = [result averageQuantity];
-                                                                 NSDate *startDate = result.startDate;
-                                                                 NSDate *endDate = result.endDate;
-                                                                 if (completionHandler) {
-                                                                     double value = [sum doubleValueForUnit:unit];
-                                                                     completionHandler(value, startDate, endDate, error);
-                                                                 }
-                                                             }];
+    HKSampleQuery *query = [[HKSampleQuery alloc]
+                                initWithSampleType:sampleType
+                                predicate:predicate
+                                limit:HKObjectQueryNoLimit
+                                sortDescriptors:nil
+                                resultsHandler:^(HKSampleQuery *query, NSArray *results, NSError *error) {
+                                    if (completionHandler && results.count > 0) {
+                                        HKQuantitySample *sample = results.firstObject;
+                                        double value = [sample.quantity doubleValueForUnit:unit];
+                                        completionHandler(value, day, error);
+                                    }
+                                }];
     
     [self.healthStore executeQuery:query];
 }
