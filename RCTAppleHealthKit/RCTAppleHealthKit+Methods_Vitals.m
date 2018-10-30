@@ -21,12 +21,13 @@
         [self fetchDiscreteValueOnDayForType:restingHeartRateType
                                        unit:restingHeartRateUnit
                                        day:date
-                                       completion:^(double value, NSDate *day, NSError *error) {
-            if (!value) {
+                                       completion:^(HKQuantitySample *sample, NSDate *day, NSError *error) {
+            if (!sample) {
                 NSLog(@"error getting resting heart rate: %@", error);
                 callback(@[RCTMakeError(@"error getting resting heart rate", error, nil)]);
-            } else {                                               
-               NSDictionary *response = @{
+            } else {
+                double value = [sample.quantity doubleValueForUnit:restingHeartRateUnit];
+                NSDictionary *response = @{
                                           @"value" : @(value),
                                           @"day" : [RCTAppleHealthKit buildISO8601StringFromDate:day]
                                           };

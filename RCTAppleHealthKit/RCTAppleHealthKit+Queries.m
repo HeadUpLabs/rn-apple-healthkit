@@ -291,7 +291,7 @@
 - (void)fetchDiscreteValueOnDayForType:(HKSampleType *)sampleType
                                   unit:(HKUnit *)unit
                                   day:(NSDate *)day
-                           completion:(void (^)(double, NSDate *, NSError *))completionHandler {
+                           completion:(void (^)(HKQuantitySample *, NSDate *, NSError *))completionHandler {
     
     NSPredicate *predicate = [RCTAppleHealthKit predicateForSamplesOnDay:day];
     HKSampleQuery *query = [[HKSampleQuery alloc]
@@ -300,10 +300,13 @@
                                 limit:HKObjectQueryNoLimit
                                 sortDescriptors:nil
                                 resultsHandler:^(HKSampleQuery *query, NSArray *results, NSError *error) {
-                                    if (completionHandler && results.count > 0) {
-                                        HKQuantitySample *sample = results.firstObject;
-                                        double value = [sample.quantity doubleValueForUnit:unit];
-                                        completionHandler(value, day, error);
+                                    if (completionHandler) {
+                                        if(results.count > 0){
+                                            HKQuantitySample *sample = results.firstObject;
+                                            completionHandler(sample, day, error);
+                                        } else {
+                                            completionHandler(nil, day, nil);
+                                        }
                                     }
                                 }];
     
