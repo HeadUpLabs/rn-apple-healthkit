@@ -238,6 +238,29 @@
     }];
 }
 
+- (void)body_saveWaistCircumference:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback
+{
+    double waistCircumference = [RCTAppleHealthKit doubleValueFromOptions:input];
+    NSDate *sampleDate = [RCTAppleHealthKit dateFromOptionsDefaultNow:input];
+
+    HKUnit *waistCircumferenceUnit = [RCTAppleHealthKit hkUnitFromOptions:input];
+    if(waistCircumferenceUnit == nil){
+        waistCircumferenceUnit = [HKUnit inchUnit];
+    }
+
+    HKQuantity *waistCircumferenceQuantity = [HKQuantity quantityWithUnit:waistCircumferenceUnit doubleValue:waistCircumference];
+    HKQuantityType *waistCircumferenceType = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierWaistCircumference];
+    HKQuantitySample *waistCircumferenceSample = [HKQuantitySample quantitySampleWithType:waistCircumferenceType quantity:waistCircumferenceQuantity startDate:sampleDate endDate:sampleDate];
+
+    [self.healthStore saveObject:waistCircumferenceSample withCompletion:^(BOOL success, NSError *error) {
+        if (!success) {
+            NSLog(@"error saving waistCircumference sample LUL: %@", error);
+            callback(@[RCTMakeError(@"error saving waistCircumference sample", error, nil)]);
+            return;
+        }
+        callback(@[[NSNull null], @(waistCircumference)]);
+    }];
+}
 
 - (void)body_getLatestBodyFatPercentage:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback
 {

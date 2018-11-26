@@ -60,6 +60,7 @@ export const Permissions = {
   HeartRate: "HeartRate",
   RestingHeartRate: "RestingHeartRate",
   Height: "Height",
+  WaistCircumference: "WaistCircumference",
   LeanBodyMass: "LeanBodyMass",
   MindfulSession: "MindfulSession",
   NikeFuel: "NikeFuel",
@@ -68,4 +69,4 @@ export const Permissions = {
   StepCount: "StepCount",
   Steps: "Steps",
   Weight: "Weight"
-}
+};
