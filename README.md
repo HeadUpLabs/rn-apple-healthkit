@@ -143,7 +143,7 @@ AppleHealthKit.initHealthKit(options: Object, (err: string, results: Object) => 
   - WalkingRunning Distance
   - Cycling Distance
 
-  0.6.3v
+    0.6.3v
 
 - Food and Water ([#19](https://github.com/terrillo/rn-apple-healthkit/pull/19))
 
@@ -189,10 +189,11 @@ AppleHealthKit.initHealthKit(options: Object, (err: string, results: Object) => 
     - [getStepCount](</docs/getStepCount().md>)
     - [getWeightSamples](</docs/getweightsamples().md>)
   - Write Methods
-    - [saveBmi](</docs/savebmi().md>)
-    - [saveHeight](</docs/saveheight().md>)
+    - [saveBmi](</docs/saveBmi().md>)
+    - [saveHeight](</docs/saveHeight().md>)
     - [saveMindfulSession](</docs/saveMindfulSession().md>)
-    - [saveWeight](</docs/saveweight().md>)
+    - [saveWeight](</docs/saveWeight().md>)
+    - [saveWaistCircumference](</docs/saveWaistcirCumference().md>)
     - [saveSteps](</docs/saveSteps().md>)
 - [References](#references)
 
@@ -223,6 +224,7 @@ The available Healthkit permissions to use with `initHealthKit`
 | StepCount              | [HKQuantityTypeIdentifierStepCount](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierstepcount?language=objc)                                | ✓    | ✓     |
 | Steps                  | [HKQuantityTypeIdentifierSteps](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifiersteps?language=objc)                                        | ✓    | ✓     |
 | Weight                 | [HKQuantityTypeIdentifierBodyMass](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierbodymass?language=objc)                                  | ✓    | ✓     |
+| WaistCircumference     | [HKQuantityTypeIdentifierBodyMass](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierwaistcircumference?language=objc)                        | ✓    | ✓     |
 
 These permissions are exported as constants of the `rn-apple-healthkit` module.
 
