@@ -1,6 +1,6 @@
 # React Native Apple Healthkit
 
-A React Native bridge module for interacting with Apple Healthkit data.
+A React Native bridge module for interacting with Apple Healthkit data. Checkout the [full documentation](https://github.com/terrillo/rn-apple-healthkit/tree/master/docs)
 
 ## Installation
 
@@ -134,35 +134,95 @@ AppleHealthKit.initHealthKit(options: Object, (err: string, results: Object) => 
 
 0.6.4v
 
-- Added write Waist Circumference
+- Basal energy ([#23](https://github.com/terrillo/rn-apple-healthkit/pull/23))
+- Fixed issues with saving weight in the past
+- Commited the docs to increase pull request support
+- Add daily samples for:
+
+  - Flights Climbed
+  - WalkingRunning Distance
+  - Cycling Distance
+
+  0.6.3v
+
+- Food and Water ([#19](https://github.com/terrillo/rn-apple-healthkit/pull/19))
+
+  0.6.1v
+
+- HKQuantityTypeIdentifierActiveEnergyBurned
+
+## Wiki
+
+- [Installation](/docs/Install)
+- [Documentation](#documentation)
+  - [Permissions](#permissions)
+  - [Units](#units)
+  - Base Methods
+    - [isAvailable](</docs/isAvailable().md>)
+    - [initHealthKit](</docs/initHealthKit().md>)
+  - Realtime Methods
+    - [initStepCountObserver](</docs/initStepCountObserver().md>)
+  - Read Methods
+    - [getActiveEnergyBurned](</docs/getActiveEnergyBurned().md>)
+    - [getBasalEnergyBurned](</docs/getBasalEnergyBurned().md>)
+    - [getBiologicalSex](</docs/getBiologicalSex().md>)
+    - [getBloodGlucoseSamples](</docs/getbloodglucosesamples().md>)
+    - [getBloodPressureSamples](</docs/getbloodpressuresamples().md>)
+    - [getBodyTemperatureSamples](</docs/getbodytemperaturesamples().md>)
+    - [getDailyDistanceCyclingSamples]()
+    - [getDailyDistanceWalkingRunningSamples](</docs/getDailyDistanceWalkingRunningSamples().md>)
+    - [getDailyFlightsClimbedSamples](</docs/getDailyFlightsClimbedSamples().md>)
+    - [getDailyStepCountSamples](</docs/getDailyStepCountSamples().md>)
+    - [getDateOfBirth](</docs/getDateOfBirth().md>)
+    - [getDistanceCycling](</docs/getdistancecycling().md>)
+    - [getDistanceWalkingRunning](</docs/getDistanceWalkingRunning().md>)
+    - [getFlightsClimbed](</docs/getflightsclimbed().md>)
+    - [getHeartRateSamples](</docs/getheartratesamples().md>)
+    - [getHeightSamples](</docs/getheightsamples().md>)
+    - [getLatestBmi](</docs/getlatestbmi().md>)
+    - [getLatestBodyFatPercentage](</docs/getlatestbodyfatpercentage().md>)
+    - [getLatestHeight](</docs/getlatestheight().md>)
+    - [getLatestLeanBodyMass](</docs/getlatestleanbodymass().md>)
+    - [getLatestWeight](</docs/getlatestweight().md>)
+    - [getRespiratoryRateSamples](</docs/getrespiratoryratesamples().md>)
+    - [getSleepSamples](</docs/getsleepsamples().md>)
+    - [getStepCount](</docs/getStepCount().md>)
+    - [getWeightSamples](</docs/getweightsamples().md>)
+  - Write Methods
+    - [saveBmi](</docs/savebmi().md>)
+    - [saveHeight](</docs/saveheight().md>)
+    - [saveMindfulSession](</docs/saveMindfulSession().md>)
+    - [saveWeight](</docs/saveweight().md>)
+    - [saveSteps](</docs/saveSteps().md>)
+- [References](#references)
 
 ## Supported Apple Permissions
 
 The available Healthkit permissions to use with `initHealthKit`
 
-| Permission             | Healthkit Identifier Type                                                                                                                                                         | Read | Write |
-| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---- | ----- |
-| ActiveEnergyBurned     | [HKCharacteristicTypeIdentifierActiveEnergyBurned](https://developer.apple.com/documentation/healthkit/hkquantitytypeidentifier/1615771-activeenergyburned?preferredLanguage=occ) | ✓    |       |
-| BiologicalSex          | [HKCharacteristicTypeIdentifierBiologicalSex](https://developer.apple.com/reference/Healthkit/hkcharacteristictypeidentifierbiologicalsex?preferredLanguage=occ)                  | ✓    |       |
-| BloodGlucose           | [HKQuantityTypeIdentifierBloodGlucose](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierbloodglucose?preferredLanguage=occ)                                | ✓    |       |
-| BloodPressureDiastolic | [HKQuantityTypeIdentifierBloodPressureDiastolic](https://developer.apple.com/documentation/healthkit/hkquantitytypeidentifierbloodpressurediastolic?preferredLanguage=occ)        | ✓    | ✓     |
-| BloodPressureSystolic  | [HKQuantityTypeIdentifierBloodPressureSystolic](https://developer.apple.com/documentation/healthkit/hkquantitytypeidentifierbloodpressuresystolic?preferredLanguage=occ)          | ✓    | ✓     |
-| BodyMassIndex          | [HKQuantityTypeIdentifierBodyMassIndex](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierbodymassindex?preferredLanguage=occ)                              | ✓    | ✓     |
-| BodyTemperature        | [HKQuantityTypeIdentifierBodyTemperature](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierbodytemperature?preferredLanguage=occ)                          | ✓    |       |
-| DateOfBirth            | [HKCharacteristicTypeIdentifierDateOfBirth](https://developer.apple.com/reference/Healthkit/hkcharacteristictypeidentifierdateofbirth?preferredLanguage=occ)                      | ✓    |       |
-| DistanceCycling        | [HKQuantityTypeIdentifierDistanceCycling](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierdistancecycling?preferredLanguage=occ)                          | ✓    | ✓     |
-| DistanceWalkingRunning | [HKQuantityTypeIdentifierDistanceWalkingRunning](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierdistancewalkingrunning?preferredLanguage=occ)            | ✓    | ✓     |
-| FlightsClimbed         | [HKQuantityTypeIdentifierFlightsClimbed](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierflightsclimbed?preferredLanguage=occ)                            | ✓    | ✓     |
-| HeartRate              | [HKQuantityTypeIdentifierHeartRate](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierheartrate?preferredLanguage=occ)                                      | ✓    |       |
-| Height                 | [HKQuantityTypeIdentifierHeight](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierheight?preferredLanguage=occ)                                            | ✓    | ✓     |
-| LeanBodyMass           | [HKQuantityTypeIdentifierLeanBodyMass](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierleanbodymass?preferredLanguage=occ)                                | ✓    | ✓     |
-| MindfulSession         | [HKCategoryTypeIdentifierMindfulSession](https://developer.apple.com/reference/healthkit/hkcategorytypeidentifiermindfulsession?preferredLanguage=occ)                            |      | ✓     |
-| RespiratoryRate        | [HKQuantityTypeIdentifierRespiratoryRate](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierrespiratoryrate?preferredLanguage=occ)                          | ✓    |       |
-| SleepAnalysis          | [HKCategoryTypeIdentifierSleepAnalysis](https://developer.apple.com/reference/Healthkit/hkcategorytypeidentifiersleepanalysis?preferredLanguage=occ)                              | ✓    |       |
-| StepCount              | [HKQuantityTypeIdentifierStepCount](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierstepcount?preferredLanguage=occ)                                      | ✓    | ✓     |
-| Steps                  | [HKQuantityTypeIdentifierSteps](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifiersteps?preferredLanguage=occ)                                              | ✓    | ✓     |
-| Weight                 | [HKQuantityTypeIdentifierBodyMass](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierbodymass?preferredLanguage=occ)                                        | ✓    | ✓     |
-| WaistCircumference     | [HKQuantityTypeIdentifierWaistCircumference](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierwaistCircumference?preferredLanguage=occ)                    | ✓    | ✓     |
+| Permission             | Healthkit Identifier Type                                                                                                                                           | Read | Write |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---- | ----- |
+| ActiveEnergyBurned     | [HKQuantityTypeIdentifierActiveEnergyBurned](https://developer.apple.com/documentation/healthkit/hkquantitytypeidentifier/1615771-activeenergyburned?language=objc) | ✓    |       |
+| BasalEnergyBurned      | [HKQuantityTypeIdentifierBasalEnergyBurned](https://developer.apple.com/documentation/healthkit/hkquantitytypeidentifier/1615512-basalenergyburned?language=objc)   | ✓    |       |
+| BiologicalSex          | [HKCharacteristicTypeIdentifierBiologicalSex](https://developer.apple.com/reference/Healthkit/hkcharacteristictypeidentifierbiologicalsex?language=objc)            | ✓    |       |
+| BloodGlucose           | [HKQuantityTypeIdentifierBloodGlucose](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierbloodglucose?language=objc)                          | ✓    |       |
+| BloodPressureDiastolic | [HKQuantityTypeIdentifierBloodPressureDiastolic](https://developer.apple.com/documentation/healthkit/hkquantitytypeidentifierbloodpressurediastolic?language=objc)  | ✓    | ✓     |
+| BloodPressureSystolic  | [HKQuantityTypeIdentifierBloodPressureSystolic](https://developer.apple.com/documentation/healthkit/hkquantitytypeidentifierbloodpressuresystolic?language=objc)    | ✓    | ✓     |
+| BodyMassIndex          | [HKQuantityTypeIdentifierBodyMassIndex](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierbodymassindex?language=objc)                        | ✓    | ✓     |
+| BodyTemperature        | [HKQuantityTypeIdentifierBodyTemperature](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierbodytemperature?language=objc)                    | ✓    |       |
+| DateOfBirth            | [HKCharacteristicTypeIdentifierDateOfBirth](https://developer.apple.com/reference/Healthkit/hkcharacteristictypeidentifierdateofbirth?language=objc)                | ✓    |       |
+| DistanceCycling        | [HKQuantityTypeIdentifierDistanceCycling](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierdistancecycling?language=objc)                    | ✓    | ✓     |
+| DistanceWalkingRunning | [HKQuantityTypeIdentifierDistanceWalkingRunning](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierdistancewalkingrunning?language=objc)      | ✓    | ✓     |
+| FlightsClimbed         | [HKQuantityTypeIdentifierFlightsClimbed](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierflightsclimbed?language=objc)                      | ✓    | ✓     |
+| HeartRate              | [HKQuantityTypeIdentifierHeartRate](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierheartrate?language=objc)                                | ✓    |       |
+| Height                 | [HKQuantityTypeIdentifierHeight](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierheight?language=objc)                                      | ✓    | ✓     |
+| LeanBodyMass           | [HKQuantityTypeIdentifierLeanBodyMass](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierleanbodymass?language=objc)                          | ✓    | ✓     |
+| MindfulSession         | [HKCategoryTypeIdentifierMindfulSession](https://developer.apple.com/reference/healthkit/hkcategorytypeidentifiermindfulsession?language=objc)                      |      | ✓     |
+| RespiratoryRate        | [HKQuantityTypeIdentifierRespiratoryRate](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierrespiratoryrate?language=objc)                    | ✓    |       |
+| SleepAnalysis          | [HKCategoryTypeIdentifierSleepAnalysis](https://developer.apple.com/reference/Healthkit/hkcategorytypeidentifiersleepanalysis?language=objc)                        | ✓    |       |
+| StepCount              | [HKQuantityTypeIdentifierStepCount](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierstepcount?language=objc)                                | ✓    | ✓     |
+| Steps                  | [HKQuantityTypeIdentifierSteps](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifiersteps?language=objc)                                        | ✓    | ✓     |
+| Weight                 | [HKQuantityTypeIdentifierBodyMass](https://developer.apple.com/reference/Healthkit/hkquantitytypeidentifierbodymass?language=objc)                                  | ✓    | ✓     |
 
 These permissions are exported as constants of the `rn-apple-healthkit` module.
 
