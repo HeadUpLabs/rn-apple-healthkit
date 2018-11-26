@@ -193,7 +193,7 @@ AppleHealthKit.initHealthKit(options: Object, (err: string, results: Object) => 
     - [saveHeight](</docs/saveHeight().md>)
     - [saveMindfulSession](</docs/saveMindfulSession().md>)
     - [saveWeight](</docs/saveWeight().md>)
-    - [saveWaistCircumference](</docs/saveWaistcirCumference().md>)
+    - [saveWaistCircumference](</docs/saveWaistCircumference().md>)
     - [saveSteps](</docs/saveSteps().md>)
 - [References](#references)
 
