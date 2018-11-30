@@ -5,6 +5,40 @@
 @implementation RCTAppleHealthKit (Methods_Vitals)
 
 
+- (void)vitals_getRestingHeartRate:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback
+{
+    if (@available(iOS 11.0, *)) {
+        NSDate *date = [RCTAppleHealthKit dateFromOptions:input key:@"date" withDefault:[NSDate date]];
+        
+        if(date == nil) {
+            callback(@[RCTMakeError(@"could not parse date from options.date", nil, nil)]);
+            return;
+        }
+        
+        HKSampleType *restingHeartRateType = [HKSampleType quantityTypeForIdentifier: HKQuantityTypeIdentifierRestingHeartRate];
+        HKUnit *restingHeartRateUnit = [HKUnit unitFromString: @"count/min"];
+        
+        [self fetchDiscreteValueOnDayForType:restingHeartRateType
+                                       unit:restingHeartRateUnit
+                                       day:date
+                                       completion:^(HKQuantitySample *sample, NSDate *day, NSError *error) {
+            if (!sample) {
+                NSLog(@"error getting resting heart rate: %@", error);
+                callback(@[RCTMakeError(@"error getting resting heart rate", error, nil)]);
+            } else {
+                double value = [sample.quantity doubleValueForUnit:restingHeartRateUnit];
+                NSDictionary *response = @{
+                                          @"value" : @(value),
+                                          @"day" : [RCTAppleHealthKit buildISO8601StringFromDate:day]
+                                          };
+               
+               callback(@[[NSNull null], response]);
+           }
+        }];
+    }
+}
+
+
 - (void)vitals_getHeartRateSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback
 {
     HKQuantityType *heartRateType = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierHeartRate];

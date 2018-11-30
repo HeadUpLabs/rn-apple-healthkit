@@ -82,7 +82,7 @@
 - (void)body_saveWeight:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback
 {
     double weight = [RCTAppleHealthKit doubleValueFromOptions:input];
-    NSDate *sampleDate = [RCTAppleHealthKit dateFromOptionsDefaultNow:input];
+    NSDate *sampleDate = [RCTAppleHealthKit dateFromOptions:input key:@"startDate" withDefault:[NSDate date]];
     HKUnit *unit = [RCTAppleHealthKit hkUnitFromOptions:input key:@"unit" withDefault:[HKUnit poundUnit]];
 
     HKQuantity *weightQuantity = [HKQuantity quantityWithUnit:unit doubleValue:weight];
@@ -230,7 +230,7 @@
 
     [self.healthStore saveObject:heightSample withCompletion:^(BOOL success, NSError *error) {
         if (!success) {
-            NSLog(@"error saving height sample: %@", error);
+            NSLog(@"error saving height sample LUL: %@", error);
             callback(@[RCTMakeError(@"error saving height sample", error, nil)]);
             return;
         }
@@ -238,6 +238,29 @@
     }];
 }
 
+- (void)body_saveWaistCircumference:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback
+{
+    double waistCircumference = [RCTAppleHealthKit doubleValueFromOptions:input];
+    NSDate *sampleDate = [RCTAppleHealthKit dateFromOptionsDefaultNow:input];
+
+    HKUnit *waistCircumferenceUnit = [RCTAppleHealthKit hkUnitFromOptions:input];
+    if(waistCircumferenceUnit == nil){
+        waistCircumferenceUnit = [HKUnit inchUnit];
+    }
+
+    HKQuantity *waistCircumferenceQuantity = [HKQuantity quantityWithUnit:waistCircumferenceUnit doubleValue:waistCircumference];
+    HKQuantityType *waistCircumferenceType = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierWaistCircumference];
+    HKQuantitySample *waistCircumferenceSample = [HKQuantitySample quantitySampleWithType:waistCircumferenceType quantity:waistCircumferenceQuantity startDate:sampleDate endDate:sampleDate];
+
+    [self.healthStore saveObject:waistCircumferenceSample withCompletion:^(BOOL success, NSError *error) {
+        if (!success) {
+            NSLog(@"error saving waistCircumference sample LUL: %@", error);
+            callback(@[RCTMakeError(@"error saving waistCircumference sample", error, nil)]);
+            return;
+        }
+        callback(@[[NSNull null], @(waistCircumference)]);
+    }];
+}
 
 - (void)body_getLatestBodyFatPercentage:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback
 {

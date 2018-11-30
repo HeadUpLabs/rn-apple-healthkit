@@ -288,6 +288,30 @@
     [self.healthStore executeQuery:query];
 }
 
+- (void)fetchDiscreteValueOnDayForType:(HKSampleType *)sampleType
+                                  unit:(HKUnit *)unit
+                                  day:(NSDate *)day
+                           completion:(void (^)(HKQuantitySample *, NSDate *, NSError *))completionHandler {
+    
+    NSPredicate *predicate = [RCTAppleHealthKit predicateForSamplesOnDay:day];
+    HKSampleQuery *query = [[HKSampleQuery alloc]
+                                initWithSampleType:sampleType
+                                predicate:predicate
+                                limit:HKObjectQueryNoLimit
+                                sortDescriptors:nil
+                                resultsHandler:^(HKSampleQuery *query, NSArray *results, NSError *error) {
+                                    if (completionHandler) {
+                                        if(results.count > 0){
+                                            HKQuantitySample *sample = results.firstObject;
+                                            completionHandler(sample, day, error);
+                                        } else {
+                                            completionHandler(nil, day, nil);
+                                        }
+                                    }
+                                }];
+    
+    [self.healthStore executeQuery:query];
+}
 
 - (void)fetchSumOfSamplesOnDayForType:(HKQuantityType *)quantityType
                                  unit:(HKUnit *)unit
@@ -304,7 +328,7 @@
                                                               NSDate *endDate = result.endDate;
                                                               if (completionHandler) {
                                                                      double value = [sum doubleValueForUnit:unit];
-                                                                     completionHandler(value,startDate, endDate, error);
+                                                                     completionHandler(value, startDate, endDate, error);
                                                               }
                                                           }];
 

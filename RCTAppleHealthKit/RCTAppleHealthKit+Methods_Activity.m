@@ -72,12 +72,12 @@
                           }];
 }
 
-- (void)activity_getAppleExerciseTime:(NSDictionary *)input callback:(id)callback:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback
+- (void)activity_getBasalEnergyBurned:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback
 {
-    HKQuantityType *appleExercseTimeType = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierAppleExerciseTime];
+    HKQuantityType *basalEnergyType = [HKQuantityType quantityTypeForIdentifier:HKQuantityTypeIdentifierBasalEnergyBurned];
     NSDate *startDate = [RCTAppleHealthKit dateFromOptions:input key:@"startDate" withDefault:nil];
     NSDate *endDate = [RCTAppleHealthKit dateFromOptions:input key:@"endDate" withDefault:[NSDate date]];
-    HKUnit *minute = [HKUnit minuteUnit];
+    HKUnit *cal = [HKUnit kilocalorieUnit];
     
     if(startDate == nil){
         callback(@[RCTMakeError(@"startDate is required in options", nil, nil)]);
@@ -85,8 +85,8 @@
     }
     NSPredicate * predicate = [RCTAppleHealthKit predicateForSamplesBetweenDates:startDate endDate:endDate];
     
-    [self fetchQuantitySamplesOfType:appleExercseTimeType
-                                unit:minute
+    [self fetchQuantitySamplesOfType:basalEnergyType
+                                unit:cal
                            predicate:predicate
                            ascending:false
                                limit:HKObjectQueryNoLimit
@@ -95,8 +95,8 @@
                                   callback(@[[NSNull null], results]);
                                   return;
                               } else {
-                                  NSLog(@"error getting apple exercise minutes: %@", error);
-                                  callback(@[RCTMakeError(@"error getting apple exercise minutes", nil, nil)]);
+                                  NSLog(@"error getting basal energy burned samples: %@", error);
+                                  callback(@[RCTMakeError(@"error getting basal energy burned samples", nil, nil)]);
                                   return;
                               }
                           }];
