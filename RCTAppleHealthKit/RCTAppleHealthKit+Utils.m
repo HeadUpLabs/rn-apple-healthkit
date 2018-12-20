@@ -20,9 +20,7 @@
     NSLocale *posix = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
     dateFormatter.locale = posix;
     dateFormatter.dateFormat = @"yyyy'-'MM'-'dd'T'HH':'mm':'ss.SSSZ";
-    NSDate *parsedDate = [dateFormatter dateFromString:date];
-    NSInteger offset = [[NSTimeZone localTimeZone] secondsFromGMT];
-    return [NSDate dateWithTimeInterval:offset sinceDate:parsedDate];
+    return [dateFormatter dateFromString:date];
 }
 
 
