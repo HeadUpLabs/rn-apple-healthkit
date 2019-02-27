@@ -24,4 +24,4 @@ export const Units = {
   percent: "percent",
   pound: "pound",
   second: "second"
-}
+};

@@ -10,7 +10,10 @@
 #import "RCTAppleHealthKit.h"
 
 @interface RCTAppleHealthKit (Queries)
-
+- (void)fetchWorkoutForPredicate: (NSPredicate *)predicate
+           ascending: (BOOL)ascending
+               limit:(NSUInteger)limit
+                      completion:(void (^)(NSArray *, NSError *))completion;
 - (void)fetchMostRecentQuantitySampleOfType:(HKQuantityType *)quantityType predicate:(NSPredicate *)predicate completion:(void (^)(HKQuantity *mostRecentQuantity, NSDate *startDate, NSDate *endDate, NSError *error))completion;
 - (void)fetchSumOfSamplesTodayForType:(HKQuantityType *)quantityType unit:(HKUnit *)unit completion:(void (^)(double, NSError *))completionHandler;
 - (void)fetchDiscreteValueOnDayForType:(HKSampleType *)sampleType unit:(HKUnit *)unit day:(NSDate *)day completion:(void (^)(HKQuantitySample *, NSDate *, NSError *))completionHandler;
