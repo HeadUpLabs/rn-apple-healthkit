@@ -2,18 +2,17 @@
 //  RCTAppleHealthKit+Queries.m
 //  RCTAppleHealthKit
 //
-//  Maintained by Terrillo Wallson 2016-06-26.
+//  Created by Greg Wilson on 2016-06-26.
 //  This source code is licensed under the MIT-style license found in the
 //  LICENSE file in the root directory of this source tree.
 //
 
 #import "RCTAppleHealthKit+Queries.h"
 #import "RCTAppleHealthKit+Utils.h"
-
-#import <React/RCTBridgeModule.h>
-#import <React/RCTEventDispatcher.h>
+#import "RCTAppleHealthKit+TypesAndPermissions.h"
 
 @implementation RCTAppleHealthKit (Queries)
+
 
 - (void)fetchMostRecentQuantitySampleOfType:(HKQuantityType *)quantityType
                                   predicate:(NSPredicate *)predicate
@@ -51,6 +50,7 @@
     [self.healthStore executeQuery:query];
 }
 
+
 - (void)fetchQuantitySamplesOfType:(HKQuantityType *)quantityType
                               unit:(HKUnit *)unit
                          predicate:(NSPredicate *)predicate
@@ -81,11 +81,13 @@
                     HKQuantity *quantity = sample.quantity;
                     double value = [quantity doubleValueForUnit:unit];
 
+                    NSString *source = sample.source.name;
                     NSString *startDateString = [RCTAppleHealthKit buildISO8601StringFromDate:sample.startDate];
                     NSString *endDateString = [RCTAppleHealthKit buildISO8601StringFromDate:sample.endDate];
 
                     NSDictionary *elem = @{
                             @"value" : @(value),
+                            @"source" : source,
                             @"startDate" : startDateString,
                             @"endDate" : endDateString,
                     };
@@ -253,6 +255,7 @@
 - (void)fetchSleepCategorySamplesForPredicate:(NSPredicate *)predicate
                                    limit:(NSUInteger)lim
                                    completion:(void (^)(NSArray *, NSError *))completion {
+
 
     NSSortDescriptor *timeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:HKSampleSortIdentifierEndDate
                                                                        ascending:false];
@@ -638,6 +641,45 @@
     };
     
     HKSampleQuery *query = [[HKSampleQuery alloc] initWithSampleType:[HKObjectType workoutType] predicate:predicate limit:limit sortDescriptors:@[endDateSortDescriptor] resultsHandler:handlerBlock];
+    
+    [self.healthStore executeQuery:query];
+    
+}
+
+- (void)fetchCholesterolForPredicate: (NSPredicate *)predicate
+                           ascending: (BOOL)ascending
+                               limit:(NSUInteger)limit
+                          completion:(void (^)(NSArray *, NSError *))completion {
+    
+    void (^handlerBlock)(HKSampleQuery *query, NSArray *results, NSError *error);
+    NSSortDescriptor *endDateSortDescriptor = [[NSSortDescriptor alloc] initWithKey:HKSampleSortIdentifierEndDate ascending:ascending];
+    handlerBlock = ^(HKSampleQuery *query, NSArray *results, NSError *error) {
+        if(!results) {
+            if(completion) {
+                completion(nil, error);
+            }
+            return;
+        }
+        
+        if(completion) {
+            NSMutableArray *data = [NSMutableArray arrayWithCapacity:1];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                for (HKQuantitySample *sample in results) {
+                    double value = [[sample quantity] doubleValueForUnit:[HKUnit gramUnit]];
+                    NSDictionary *elem = @{
+                                           @"value" : @(value),
+                                           @"start" : [RCTAppleHealthKit buildISO8601StringFromDate:sample.startDate],
+                                           @"end" : [RCTAppleHealthKit buildISO8601StringFromDate:sample.endDate]
+                                           };
+                    [data addObject:elem];
+                }
+                completion(data, error);
+            });
+            
+        }
+    };
+    
+    HKSampleQuery *query = [[HKSampleQuery alloc] initWithSampleType:[HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierDietaryCholesterol] predicate:predicate limit:limit sortDescriptors:@[endDateSortDescriptor] resultsHandler:handlerBlock];
     
     [self.healthStore executeQuery:query];
     
