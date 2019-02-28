@@ -2,7 +2,7 @@
 //  RCTAppleHealthKit+Utils.h
 //  RCTAppleHealthKit
 //
-//  Maintained by Terrillo Wallson 2016-06-26.
+//  Created by Greg Wilson on 2016-06-26.
 //  This source code is licensed under the MIT-style license found in the
 //  LICENSE file in the root directory of this source tree.
 //
@@ -23,6 +23,7 @@
 + (NSDate *)startDateFromOptions:(NSDictionary *)options;
 + (NSDate *)endDateFromOptions:(NSDictionary *)options;
 + (NSDate *)endDateFromOptionsDefaultNow:(NSDictionary *)options;
++ (HKUnit *)hkUnitFromOptions:(NSDictionary *)options;
 + (HKSampleType *)hkQuantityTypeFromString:(NSString *)type;
 
 + (HKUnit *)hkUnitFromOptions:(NSDictionary *)options key:(NSString *)key withDefault:(HKUnit *)defaultValue;
