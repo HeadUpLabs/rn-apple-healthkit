@@ -10,6 +10,9 @@
 #import "RCTAppleHealthKit.h"
 
 @interface RCTAppleHealthKit (TypesAndPermissions)
+
+- (NSDictionary *)readPermsDict;
+- (NSDictionary *)writePermsDict;
 - (NSSet *)getReadPermsFromOptions:(NSArray *)options;
 - (NSSet *)getWritePermsFromOptions:(NSArray *)options;
 - (NSArray *)getReadPermsArrayFromOptions:(NSArray *)options;

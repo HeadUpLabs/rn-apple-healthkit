@@ -69,5 +69,5 @@ export const Permissions = {
   StepCount: "StepCount",
   Steps: "Steps",
   Weight: "Weight",
-  Workout: 'Workout',
+  Workout: "Workout"
 };

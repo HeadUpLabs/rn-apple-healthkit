@@ -2,7 +2,7 @@
 //  RCTAppleHealthKit.m
 //  RCTAppleHealthKit
 //
-//  Maintained by Terrillo Wallson 2016-06-26.
+//  Created by Greg Wilson on 2016-06-26.
 //  This source code is licensed under the MIT-style license found in the
 //  LICENSE file in the root directory of this source tree.
 //
@@ -25,6 +25,7 @@
 #import <React/RCTEventDispatcher.h>
 
 @implementation RCTAppleHealthKit
+
 @synthesize bridge = _bridge;
 
 RCT_EXPORT_MODULE();
@@ -113,6 +114,17 @@ RCT_EXPORT_METHOD(getStepCount:(NSDictionary *)input callback:(RCTResponseSender
 {
     [self fitness_getStepCountOnDay:input callback:callback];
 }
+
+RCT_EXPORT_METHOD(getSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
+{
+    [self fitness_getSamples:input callback:callback];
+}
+
+RCT_EXPORT_METHOD(setObserver:(NSDictionary *)input)
+{
+    [self fitness_setObserver:input];
+}
+
 
 RCT_EXPORT_METHOD(getDailyStepCountSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
 {

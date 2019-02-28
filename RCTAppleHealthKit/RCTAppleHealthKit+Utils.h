@@ -23,7 +23,7 @@
 + (NSDate *)startDateFromOptions:(NSDictionary *)options;
 + (NSDate *)endDateFromOptions:(NSDictionary *)options;
 + (NSDate *)endDateFromOptionsDefaultNow:(NSDictionary *)options;
-+ (HKUnit *)hkUnitFromOptions:(NSDictionary *)options;
++ (HKSampleType *)hkQuantityTypeFromString:(NSString *)type;
 
 + (HKUnit *)hkUnitFromOptions:(NSDictionary *)options key:(NSString *)key withDefault:(HKUnit *)defaultValue;
 + (NSUInteger)uintFromOptions:(NSDictionary *)options key:(NSString *)key withDefault:(NSUInteger)defaultValue;
@@ -35,5 +35,6 @@
 + (HKQuantity *)hkQuantityFromOptions:(NSDictionary *)options valueKey: (NSString *)valueKey unitKey: (NSString *)unitKey;
 
 + (NSMutableArray *)reverseNSMutableArray:(NSMutableArray *)array;
++ (NSString*) stringForHKWorkoutActivityType:(int) enumValue;
 
 @end
