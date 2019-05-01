@@ -173,6 +173,10 @@ AppleHealthKit.initHealthKit(options: Object, (err: string, results: Object) => 
   - Read Methods
     - [getActiveEnergyBurned](</docs/getActiveEnergyBurned().md>)
     - [getBasalEnergyBurned](</docs/getBasalEnergyBurned().md>)
+    - [getAppleExerciseTime](</docs/getAppleExerciseTime().md>)
+    - [getActiveEnergyBurnedSamples](</docs/getActiveEnergyBurnedSamples().md>)
+    - [getBasalEnergyBurnedSamples](</docs/getBasalEnergyBurnedSamples().md>)
+    - [getAppleExerciseTimeSamples](</docs/getAppleExerciseTimeSamples().md>)
     - [getBiologicalSex](</docs/getBiologicalSex().md>)
     - [getBloodGlucoseSamples](</docs/getBloodglucoseSamples().md>)
     - [getBloodPressureSamples](</docs/getBloodPressureSamples().md>)

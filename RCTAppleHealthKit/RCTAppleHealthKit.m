@@ -201,6 +201,21 @@ RCT_EXPORT_METHOD(getAppleExerciseTime:(NSDictionary *)input callback:(RCTRespon
     [self activity_getAppleExerciseTime:input callback:callback];
 }
 
+RCT_EXPORT_METHOD(getActiveEnergyBurnedSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
+{
+   [self activity_getActiveEnergyBurnedSamples:input callback:callback];
+}
+
+RCT_EXPORT_METHOD(getBasalEnergyBurnedSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
+{
+    [self activity_getBasalEnergyBurnedSamples:input callback:callback];
+}
+
+RCT_EXPORT_METHOD(getAppleExerciseTimeSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
+{
+    [self activity_getAppleExerciseTimeSamples:input callback:callback];
+}
+
 RCT_EXPORT_METHOD(getBodyTemperatureSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
 {
     [self vitals_getBodyTemperatureSamples:input callback:callback];
